@@ -8,39 +8,56 @@
 //   'mather':'Olena',
 //   'cat': 'Ray',
 // }
+
+
 function isErrorManyPeople(value) {
   return (
-    value === "" || value === null || value === Number.isNaN(Number(value)) 
+    value === "" ||
+    value === null ||
+    Number.isNaN(Number(value)) ||
+    Number.isInteger(Number(value)) === false ||
+    Number(value) < 2
   );
 }
-function isErrorfamilyMember(value){
-  return(
-    value === "" || value === null || value>=2
-  )
+//рядок не порожній і не число
+function isErrorString(value) {
+  return (
+    value === "" || value === null || Number.isNaN(Number(value)) === false
+  );
 }
-function isErrornameFamilyMember(value){
-  return(
-    value === "" || value === null 
-  )
-}
+
+//1-питаємо в користувача кількість членів родини   кількість =3
+//2- перевіряємо і якщо значення помилкове ставимо 2 особи
+
+//3-три рази будемо запитувати
+//3.1 запитувати роль до того поки не введе без помилок
+//3.2запитувати ім'я до того поки неи введе без помилок
+//3.3 записуєте данні в обєкт
 
 function getFamily() {
-  const familyComposition = {};
-  const isHowManyPeople = prompt("кількість осіб в родині");
-  const familyMember = prompt("член родини");
-  const nameFamilyMember = prompt("ім'я члена родини");
-
-  for (let i = 2; i <= isHowManyPeople; i++) {
-    if (isErrorManyPeople(isHowManyPeople) || isErrorfamilyMember(familyMember)) || isErrornameFamilyMember(nameFamilyMember) {
-      continue;
+  const family = {};
+  const userInputManyPeople = prompt("enter many people", 2);
+  const countManyPeople = isErrorManyPeople(userInputManyPeople)? 2 : Number(userInputManyPeople);
+  let FamilyMember = "";
+  let nameFamilyMember = "";
+  for (let i = 0; i < countManyPeople; i++) {
+    while (true) {
+      FamilyMember = prompt('Famile member:' + (i+1));
+      if (isErrorString(FamilyMember)) {
+        continue;
+      }
+      break;
     }
-    
-    familyComposition[`$ {'fafamilyMembermily'}`] = "${nameFamilyMember}";}
-    return familyComposition;
+    while (true) {
+      nameFamilyMember = prompt(" name Famile member"+ (i+1));
+      if (isErrorString(nameFamilyMember)) {
+        continue;
+      }
+      break;
+    }
+    family[FamilyMember] = nameFamilyMember;
   }
-
-
-
-
+  return family;
+}
 
 console.log(getFamily());
